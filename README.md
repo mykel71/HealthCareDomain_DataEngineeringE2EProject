@@ -1,187 +1,158 @@
 # Data Engineering E2E Project
-### Domain:
-  #### Health Care Revenue Cycle Management (RCM)
 
-RCM is the process that hospitals use to manage the financial aspects, from the time the patient schedule an appointment till the time the provider gets paid..
+## Domain: Health Care Revenue Cycle Management (RCM)
+Revenue Cycle Management (RCM) is the process that hospitals use to manage financial operations, from patient appointment scheduling to provider payment.
 
-### Simplified Breakdown:
-  1. It starts with a patient visit:
-     - patient details are collected, Insuarance details etc..
-     - This ensure the provide knows who will pay for the service (Provider i.e. hospital, clinic, doctor)
-     - the payer => insuarance, the patient, mediacal aid etc..
+## Simplified Breakdown:
+1. **Patient Visit**
+   - Collection of patient details, insurance information, etc.
+   - Determines who will cover the cost (hospital, clinic, doctor, insurance, medical aid, or the patient).
 
-2. Services are provided
-3. Billing take place:
-   - The Hospital will create the bill for the service provided
-  
-4. Claims are reviewed:
-   - Insuarance company review the bill
-   - They might accept it i.e. pay in full, or partial or decline the claim
-  
-5. Payment and follow ups"
-   - If partial payment is done by insuarance then the remaining balance is directed to the patient.
-   - The same goes if the insuarance declines the claim
-  
-6. Tracking and improvement:
+2. **Service Delivery**
+   - The healthcare provider offers services to the patient.
 
+3. **Billing Process**
+   - The hospital generates a bill for the provided services.
 
-### Notes:
-RCM ensures the hospital can provide quality care while also staying financially healthy.
-As part of RCM we have 2 main aspects:
-- Account Receivables (AR) -> Important and key focus of this project
-- Account Payable (AP)
+4. **Claims Processing**
+   - Insurance company reviews the bill.
+   - Outcomes: Full payment, partial payment, or claim denial.
 
-Patient paying is often a risk.
-- Scenarios when patient has to pay
-- Low Insuarance - these insuarance providers put most of the burden on the patients
+5. **Payments & Follow-ups**
+   - If only a partial payment is made, the remaining balance is billed to the patient.
+   - If the insurance denies the claim, the patient is responsible for the full amount.
 
-Private Clinics
-Dental Treatment
-Deductables
+6. **Tracking & Continuous Improvement**
+   - Monitoring outstanding balances and optimizing the collection process.
 
-### 2 Objectives for AR
-- Bring Cash
-- Minimise the collection period (Inflation)
+## Key Aspects of RCM:
+RCM ensures financial sustainability while maintaining quality care. Two critical components:
+- **Accounts Receivable (AR)** - Focus of this project.
+- **Accounts Payable (AP)**
 
-The probability of collecting your full amount decreases with time..
-- 93% of money due 30 days old..
-- 85% of money deu 60 days old..
-- 73% of money due 90 days old..
+### Challenges in Payment Collection:
+- High patient financial responsibility due to:
+  - Low insurance coverage.
+  - Out-of-pocket payments for private clinics, dental treatments, and deductibles.
 
-### KPI to measure AR & set benchmarks:
-#### Resources that can help:
-https://mdmanagementgroup.com/healthcare-accounts-receivable-management/
-https://gentem.com/blog/revenue-cycle-kpis-definitions-and-benchmarks/
+### Objectives for AR:
+1. Maximize cash inflow.
+2. Minimize the collection period (reduce the impact of inflation).
 
-1. AR > 90 days..
-   e.g. - you have to collect a total of 1 million Rand
-       - R100K older than 90 days
-       - 100K / 1 million = 10%
+**Collection Probability Over Time:**
+- 93% of money due within 30 days is collectible.
+- 85% of money due within 60 days is collectible.
+- 73% of money due within 90 days is collectible.
 
-2. Days in AR
-   1 million Rand in 100 days
-   per day 10000 Rand
+## Key Performance Indicators (KPIs) for AR:
+### Benchmarks & Resources:
+- [Healthcare AR Management](https://mdmanagementgroup.com/healthcare-accounts-receivable-management/)
+- [Revenue Cycle KPIs](https://gentem.com/blog/revenue-cycle-kpis-definitions-and-benchmarks/)
 
+**1. AR Aging (> 90 days):**
+   - Example:
+     - Total amount to collect: R1,000,000
+     - Amount older than 90 days: R100,000
+     - AR > 90 days = (R100,000 / R1,000,000) * 100 = **10%**
 
-### Data Engineering Task:
-1. We will have data in different sources
-2. We need to create a pipeline, the result of this pipeline will be fact tbls and dims tbls.
-   - We will have the reporting team to create/ generate some KPIs.
-  
-     #### Datasets:
-     - EMR Data - Electronic Medical Records (Azure SQL DB)
-         - Patients
-         - Providers
-         - Department
-         - Transactions
-         - Encounter
-     Hospital a - techfiedsolutions-hospital-a
-     Hospital b - techfiedsolutions-hospital-b
+**2. Days in AR:**
+   - Example:
+     - R1,000,000 collected over 100 days
+     - Per day collection rate: **R10,000**
 
-     - Claims Data - Insuarance Company Data (Flat-Files) the Ins Co. will upload data 
-         - folder in Datalake - Landing (monthly once)
-           
-     - NPI data - National Provider Identifier (Public API)
-         - Unique indentifier that identifies each doctor
-           
-     - ICD data - ICD codes are a standardized system used by health care providers map diagnosis code and description. (API)
-    
-       #### SUmmary of Datasets:
-       - EMR (Database)
-       - Claims (Flat files)
-       - API (NPI / ICD)
-      
-  ### Solution Architecture
+---
 
-#### Medallion Architecture
+## Data Engineering Tasks:
+1. **Data Integration from Multiple Sources**
+2. **ETL Pipeline Development** to create **fact and dimension tables** for reporting.
+3. **Generate KPIs for Analysis**
 
-landing 	  ->  bronze 		  	-> 		silver 			  ->   gold
+### Datasets:
+- **Electronic Medical Records (EMR) - Azure SQL Database**
+  - Patients, Providers, Departments, Transactions, Encounters
+  - **Sources:**
+    - Hospital A: `techfiedsolutions-hospital-a`
+    - Hospital B: `techfiedsolutions-hospital-b`
 
-flat file   -> parquet files	->		Delta Tables	-> 	 Delta tables
+- **Claims Data - Insurance Company (Flat Files in Data Lake)**
+  - Data uploaded monthly to the **Landing Zone**.
 
-EMR (SQL DB) - we use adf to silver layer in form of parquet file
-Claims (FLat files) - only flat files will go to the landing container
-Codes (Parquet Files) - bronze layer
+- **National Provider Identifier (NPI) - Public API**
+  - Unique identifier for each doctor.
 
-bronze - parquet format (source of truth)
-silver - data cleaning, enrich, CDM (common data model), SCD2
-gold - aggregation, Fact table and Dimension table
+- **ICD Data - API Source**
+  - Standardized system for mapping diagnosis codes and descriptions.
 
-Gold - Business Users
-Silver - Data Scientist, Machine Learning, Data Analysts
-Bronze - Data Engineer
+### Summary of Data Sources:
+| Source | Format |
+|--------|--------|
+| EMR | Database |
+| Claims | Flat Files |
+| NPI & ICD | APIs |
 
-### TechfiedSolutions Health Care Azure Data Warehousing Project - Architecture
+---
 
-![image](https://github.com/user-attachments/assets/73b1e11e-c679-440b-8640-cf1160a8e0ad)
+## Solution Architecture:
+### Medallion Architecture
+| Stage | Storage Format | Purpose |
+|--------|--------------|---------|
+| **Landing** | Flat Files | Raw data from external sources |
+| **Bronze** | Parquet Files | Source of Truth |
+| **Silver** | Delta Tables | Cleaned, Enriched Data (CDM, SCD2) |
+| **Gold** | Delta Tables | Aggregated Data for Business Users |
 
-Fact -  a numeric value
-Dimension - supporting things (SCD2)
+### User Access by Layer:
+| Layer | Users |
+|--------|--------|
+| **Gold** | Business Users |
+| **Silver** | Data Scientists, Machine Learning Engineers, Analysts |
+| **Bronze** | Data Engineers |
 
-### Step 1
-EMR data -> bronze layer
-#### Tech:
-  - Azure Data Factory (For Ingestion)
-  - Azure Databricks - for our data processing
-  - Azure SQL DB - EMR
-  - Azure SA - Raw files, parquet files
-  - Key Vault - for storing the credentials
+### TechfiedSolutions Healthcare Azure Data Warehousing Project - Architecture
+![Project Architecture](https://github.com/user-attachments/assets/73b1e11e-c679-440b-8640-cf1160a8e0ad)
 
+---
 
-#### Azure Storage Account:
+## Data Pipeline: Step 1 - EMR Data to Bronze Layer
+### Technologies Used:
+- **Azure Data Factory (ADF)** - Ingestion
+- **Azure Databricks** - Data Processing
+- **Azure SQL DB** - EMR Source
+- **Azure Storage Account (ADLS Gen2)** - Data Storage
+- **Azure Key Vault** - Credential Management
 
-techfiedsolutionadlsdev (adls gen2)
-	- landing
-	- bronze
-	- silver
-	- gold
+### Azure Storage Account:
+**techfiedsolutionadlsdev (ADLS Gen2) - Storage Structure**
+```
+/landing
+/bronze
+/silver
+/gold
+/configs
+  /metadata-driven pipeline (e.g., load_config.csv)
+```
 
-	- configs (metadata driven pipeline)
-		emr
-			load_config.csv
+**Data Flow:**
+- EMR (Azure SQL DB) → ADLS Gen2 (Bronze - Parquet format)
+- Audit Table (Delta Table) Created
+- **ADF Pipeline Components:**
+  - **Linked Services:** Azure SQL DB, ADLS Gen2, Delta Lake, Key Vault
+  - **Datasets:**
+    - Azure SQL (Database Name, Table Name, Schema Name)
+    - Delimited Text (ADLS Gen2)
+    - Parquet (ADLS Gen2)
+    - Databricks Delta Lake (Delta Lake)
+  - **Pipeline Activities:**
+    - **Lookup Activity:** Reads Config File (`configs/emr/load_config.csv`)
 
+---
 
-EMR (Azure SQL DB) -> ADLS Gen2 (Bronze folder in Parquet format)
+## High-Level ERD:
+![ERD](https://github.com/user-attachments/assets/286c5652-b3a1-4a92-b27b-c7ddd29bdad4)
 
-we will create a audit table (Delta Table)
-ADF pipeline
+### Fact & Dimension Tables:
+- **Fact:** Numeric values (e.g., Transactions, Payments, Claims)
+- **Dimension:** Supporting entities (e.g., Patients, Providers, Insurance Companies, ICD Codes)
 
-Linked Service
- - Azure SQL DB 
- - ADLS Gen2 
- - Delta Lake
- - Key Vault
-
-Datasets
- - Azure SQL (DB database name / table name / schema name)
- - Delimited text (ADLS Gen2)
- - Parquet (ADLS Gen2)
- - Databricks delta lake (Delta Lake)
-
-Pipeline
-	Dataset
-		Linked Service
-
-
-
-Pipeline is made of activities
-
-lookup activity will read the config file 
-configs/emr/load_config.csv
-
-
-
-
-
-
-
-
-
-
-
-
-
-### High level ERD 
-![image](https://github.com/user-attachments/assets/286c5652-b3a1-4a92-b27b-c7ddd29bdad4)
-
+This README provides a structured overview of the project, ensuring clarity and professional presentation.
 
