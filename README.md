@@ -164,7 +164,10 @@ Pipeline
 
 
 
+Pipeline is made of activities
 
+lookup activity will read the config file 
+configs/emr/load_config.csv
 
 
 
