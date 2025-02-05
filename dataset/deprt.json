@@ -1,5 +1,5 @@
 {
-	"name": "transdata",
+	"name": "deprt",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sqldataDataLakeLinkedService",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "transactions.csv",
+				"fileName": "departments.csv",
 				"folderPath": "hos-b",
 				"fileSystem": "sqldata"
 			},
