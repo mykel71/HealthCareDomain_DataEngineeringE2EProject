@@ -206,6 +206,34 @@
 									"value": "@equals(item().loadtype, 'Full')",
 									"type": "Expression"
 								},
+								"ifFalseActivities": [
+									{
+										"name": "Fetch_Logs",
+										"type": "Lookup",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "AzureDatabricksDeltaLakeSource",
+												"query": {
+													"value": "@concat('select coalesce(cast(max(loaddate) as date),''','1900-01-01',''') as last_fetched_date from audit.load_logs where','data_source=''',item().datasource,''' and tablename=''',item().tablename,'''')",
+													"type": "Expression"
+												}
+											},
+											"dataset": {
+												"referenceName": "AzureDatabricksDeltaLakeDataset_ls",
+												"type": "DatasetReference"
+											}
+										}
+									}
+								],
 								"ifTrueActivities": [
 									{
 										"name": "Full_Load_CP",
