@@ -158,8 +158,9 @@ Datasets
  - Parquet (ADLS Gen2)
  - Databricks delta lake (Delta Lake)
 
-
-
+Pipeline
+	Dataset
+		Linked Service
 
 
 
