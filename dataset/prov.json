@@ -1,0 +1,24 @@
+{
+	"name": "prov",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sqldataDataLakeLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "providers.csv",
+				"folderPath": "hos-a",
+				"fileSystem": "sqldata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

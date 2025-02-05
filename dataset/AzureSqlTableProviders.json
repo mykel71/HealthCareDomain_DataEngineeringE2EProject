@@ -1,0 +1,16 @@
+{
+	"name": "AzureSqlTableProviders",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "hospitalA",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "providers"
+		}
+	}
+}
