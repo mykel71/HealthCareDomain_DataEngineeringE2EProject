@@ -1,10 +1,6 @@
 {
 	"name": "AzureSqlTableTransact",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "hospitalB",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],

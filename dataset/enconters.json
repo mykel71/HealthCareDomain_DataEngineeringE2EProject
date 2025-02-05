@@ -1,10 +1,6 @@
 {
 	"name": "enconters",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "sqldataDataLakeLinkedService",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
