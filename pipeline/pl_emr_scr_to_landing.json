@@ -249,13 +249,10 @@
 										"userProperties": [],
 										"typeProperties": {
 											"source": {
-												"type": "AzureSqlSource",
-												"sqlReaderQuery": {
-													"value": "@concat('select *,''',item().datasource,''' as datasource from ', item().tablename)",
-													"type": "Expression"
-												},
-												"queryTimeout": "02:00:00",
-												"partitionOption": "None"
+												"type": "AzureDatabricksDeltaLakeSource",
+												"exportSettings": {
+													"type": "AzureDatabricksDeltaLakeExportCommand"
+												}
 											},
 											"sink": {
 												"type": "ParquetSink",
@@ -267,34 +264,12 @@
 													"type": "ParquetWriteSettings"
 												}
 											},
-											"enableStaging": false,
-											"translator": {
-												"type": "TabularTranslator",
-												"typeConversion": true,
-												"typeConversionSettings": {
-													"allowDataTruncation": true,
-													"treatBooleanAsNumber": false
-												}
-											}
+											"enableStaging": false
 										},
 										"inputs": [
 											{
-												"referenceName": "generic_sql_ds",
-												"type": "DatasetReference",
-												"parameters": {
-													"schema_name": {
-														"value": "@item().database",
-														"type": "Expression"
-													},
-													"table_name": {
-														"value": "@split(item().tablename,'.')[0]",
-														"type": "Expression"
-													},
-													"db_name": {
-														"value": "@split(item().tablename,'.')[1]",
-														"type": "Expression"
-													}
-												}
+												"referenceName": "AzureDatabricksDeltaLakeDataset_ls",
+												"type": "DatasetReference"
 											}
 										],
 										"outputs": [
