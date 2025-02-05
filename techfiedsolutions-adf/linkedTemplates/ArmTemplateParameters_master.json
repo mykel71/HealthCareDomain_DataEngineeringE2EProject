@@ -5,34 +5,37 @@
 		"factoryName": {
 			"value": "techfiedsolutions-adf"
 		},
-		"hospitalA_password": {
+		"AzureDataLakeStorage_accountKey": {
 			"value": ""
 		},
-		"sqldataDataLakeLinkedService_accountKey": {
+		"AzureDatabricksDeltaLake_ls_accessToken": {
 			"value": ""
 		},
-		"hospitalB_password": {
+		"hosa_sql_ls_password": {
 			"value": ""
 		},
-		"hospitalA_properties_typeProperties_server": {
-			"value": "techfiedsolutionsdev.database.windows.net"
+		"hosb_sql_ls_password": {
+			"value": ""
 		},
-		"hospitalA_properties_typeProperties_database": {
-			"value": "techfiedsolutions-hospital-a"
-		},
-		"hospitalA_properties_typeProperties_userName": {
-			"value": "mikedev"
-		},
-		"sqldataDataLakeLinkedService_properties_typeProperties_url": {
+		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://techfiedsolutionadlsdev.dfs.core.windows.net/"
 		},
-		"hospitalB_properties_typeProperties_server": {
+		"hosa_sql_ls_properties_typeProperties_server": {
 			"value": "techfiedsolutionsdev.database.windows.net"
 		},
-		"hospitalB_properties_typeProperties_database": {
+		"hosa_sql_ls_properties_typeProperties_database": {
+			"value": "@{linkedService().db_name}"
+		},
+		"hosa_sql_ls_properties_typeProperties_userName": {
+			"value": "mikedev"
+		},
+		"hosb_sql_ls_properties_typeProperties_server": {
+			"value": "techfiedsolutionsdev.database.windows.net"
+		},
+		"hosb_sql_ls_properties_typeProperties_database": {
 			"value": "techfiedsolutions-hospital-b"
 		},
-		"hospitalB_properties_typeProperties_userName": {
+		"hosb_sql_ls_properties_typeProperties_userName": {
 			"value": "mikedev"
 		},
 		"containerUri": {

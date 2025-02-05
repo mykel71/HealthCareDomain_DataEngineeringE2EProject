@@ -7,43 +7,47 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "techfiedsolutions-adf"
 		},
-		"hospitalA_password": {
+		"AzureDataLakeStorage_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'hospitalA'"
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
 		},
-		"sqldataDataLakeLinkedService_accountKey": {
+		"AzureDatabricksDeltaLake_ls_accessToken": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'sqldataDataLakeLinkedService'"
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksDeltaLake_ls'"
 		},
-		"hospitalB_password": {
+		"hosa_sql_ls_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'hospitalB'"
+			"metadata": "Secure string for 'password' of 'hosa_sql_ls'"
 		},
-		"hospitalA_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "techfiedsolutionsdev.database.windows.net"
+		"hosb_sql_ls_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'hosb_sql_ls'"
 		},
-		"hospitalA_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "techfiedsolutions-hospital-a"
-		},
-		"hospitalA_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "mikedev"
-		},
-		"sqldataDataLakeLinkedService_properties_typeProperties_url": {
+		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://techfiedsolutionadlsdev.dfs.core.windows.net/"
 		},
-		"hospitalB_properties_typeProperties_server": {
+		"hosa_sql_ls_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "techfiedsolutionsdev.database.windows.net"
 		},
-		"hospitalB_properties_typeProperties_database": {
+		"hosa_sql_ls_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "@{linkedService().db_name}"
+		},
+		"hosa_sql_ls_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "mikedev"
+		},
+		"hosb_sql_ls_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "techfiedsolutionsdev.database.windows.net"
+		},
+		"hosb_sql_ls_properties_typeProperties_database": {
 			"type": "string",
 			"defaultValue": "techfiedsolutions-hospital-b"
 		},
-		"hospitalB_properties_typeProperties_userName": {
+		"hosb_sql_ls_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "mikedev"
 		},
@@ -74,59 +78,42 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"hospitalA_password": {
-						"value": "[parameters('hospitalA_password')]"
+					"AzureDataLakeStorage_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage_accountKey')]"
 					},
-					"sqldataDataLakeLinkedService_accountKey": {
-						"value": "[parameters('sqldataDataLakeLinkedService_accountKey')]"
+					"AzureDatabricksDeltaLake_ls_accessToken": {
+						"value": "[parameters('AzureDatabricksDeltaLake_ls_accessToken')]"
 					},
-					"hospitalB_password": {
-						"value": "[parameters('hospitalB_password')]"
+					"hosa_sql_ls_password": {
+						"value": "[parameters('hosa_sql_ls_password')]"
 					},
-					"hospitalA_properties_typeProperties_server": {
-						"value": "[parameters('hospitalA_properties_typeProperties_server')]"
+					"hosb_sql_ls_password": {
+						"value": "[parameters('hosb_sql_ls_password')]"
 					},
-					"hospitalA_properties_typeProperties_database": {
-						"value": "[parameters('hospitalA_properties_typeProperties_database')]"
+					"AzureDataLakeStorage_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
 					},
-					"hospitalA_properties_typeProperties_userName": {
-						"value": "[parameters('hospitalA_properties_typeProperties_userName')]"
+					"hosa_sql_ls_properties_typeProperties_server": {
+						"value": "[parameters('hosa_sql_ls_properties_typeProperties_server')]"
 					},
-					"sqldataDataLakeLinkedService_properties_typeProperties_url": {
-						"value": "[parameters('sqldataDataLakeLinkedService_properties_typeProperties_url')]"
+					"hosa_sql_ls_properties_typeProperties_database": {
+						"value": "[parameters('hosa_sql_ls_properties_typeProperties_database')]"
 					},
-					"hospitalB_properties_typeProperties_server": {
-						"value": "[parameters('hospitalB_properties_typeProperties_server')]"
+					"hosa_sql_ls_properties_typeProperties_userName": {
+						"value": "[parameters('hosa_sql_ls_properties_typeProperties_userName')]"
 					},
-					"hospitalB_properties_typeProperties_database": {
-						"value": "[parameters('hospitalB_properties_typeProperties_database')]"
+					"hosb_sql_ls_properties_typeProperties_server": {
+						"value": "[parameters('hosb_sql_ls_properties_typeProperties_server')]"
 					},
-					"hospitalB_properties_typeProperties_userName": {
-						"value": "[parameters('hospitalB_properties_typeProperties_userName')]"
+					"hosb_sql_ls_properties_typeProperties_database": {
+						"value": "[parameters('hosb_sql_ls_properties_typeProperties_database')]"
+					},
+					"hosb_sql_ls_properties_typeProperties_userName": {
+						"value": "[parameters('hosb_sql_ls_properties_typeProperties_userName')]"
 					}
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "techfiedsolutions-adf_ArmTemplate_1",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2024-03-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'techfiedsolutions-adf_ArmTemplate_0')]"
-			]
 		}
 	]
 }

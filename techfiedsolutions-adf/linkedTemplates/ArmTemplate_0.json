@@ -7,43 +7,47 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "techfiedsolutions-adf"
 		},
-		"hospitalA_password": {
+		"AzureDataLakeStorage_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'hospitalA'"
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
 		},
-		"sqldataDataLakeLinkedService_accountKey": {
+		"AzureDatabricksDeltaLake_ls_accessToken": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'sqldataDataLakeLinkedService'"
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksDeltaLake_ls'"
 		},
-		"hospitalB_password": {
+		"hosa_sql_ls_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'hospitalB'"
+			"metadata": "Secure string for 'password' of 'hosa_sql_ls'"
 		},
-		"hospitalA_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "techfiedsolutionsdev.database.windows.net"
+		"hosb_sql_ls_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'hosb_sql_ls'"
 		},
-		"hospitalA_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "techfiedsolutions-hospital-a"
-		},
-		"hospitalA_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "mikedev"
-		},
-		"sqldataDataLakeLinkedService_properties_typeProperties_url": {
+		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://techfiedsolutionadlsdev.dfs.core.windows.net/"
 		},
-		"hospitalB_properties_typeProperties_server": {
+		"hosa_sql_ls_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "techfiedsolutionsdev.database.windows.net"
 		},
-		"hospitalB_properties_typeProperties_database": {
+		"hosa_sql_ls_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "@{linkedService().db_name}"
+		},
+		"hosa_sql_ls_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "mikedev"
+		},
+		"hosb_sql_ls_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "techfiedsolutionsdev.database.windows.net"
+		},
+		"hosb_sql_ls_properties_typeProperties_database": {
 			"type": "string",
 			"defaultValue": "techfiedsolutions-hospital-b"
 		},
-		"hospitalB_properties_typeProperties_userName": {
+		"hosb_sql_ls_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "mikedev"
 		}
@@ -53,485 +57,131 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/hospitalA')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('hospitalA_properties_typeProperties_server')]",
-					"database": "[parameters('hospitalA_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('hospitalA_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('hospitalA_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/sqldataDataLakeLinkedService')]",
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('sqldataDataLakeLinkedService_properties_typeProperties_url')]",
+					"url": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]",
 					"accountKey": {
 						"type": "SecureString",
-						"value": "[parameters('sqldataDataLakeLinkedService_accountKey')]"
+						"value": "[parameters('AzureDataLakeStorage_accountKey')]"
 					}
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/hospitalB')]",
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricksDeltaLake_ls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricksDeltaLake",
+				"typeProperties": {
+					"domain": "https://adb-1132100556600760.0.azuredatabricks.net",
+					"clusterId": "0205-124035-jwn1ymc3",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricksDeltaLake_ls_accessToken')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/hosa_sql_ls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"db_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('hosa_sql_ls_properties_typeProperties_server')]",
+					"database": "[parameters('hosa_sql_ls_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('hosa_sql_ls_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('hosa_sql_ls_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/hosb_sql_ls')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
-					"server": "[parameters('hospitalB_properties_typeProperties_server')]",
-					"database": "[parameters('hospitalB_properties_typeProperties_database')]",
+					"server": "[parameters('hosb_sql_ls_properties_typeProperties_server')]",
+					"database": "[parameters('hosb_sql_ls_properties_typeProperties_database')]",
 					"encrypt": "mandatory",
 					"trustServerCertificate": false,
 					"authenticationType": "SQL",
-					"userName": "[parameters('hospitalB_properties_typeProperties_userName')]",
+					"userName": "[parameters('hosb_sql_ls_properties_typeProperties_userName')]",
 					"password": {
 						"type": "SecureString",
-						"value": "[parameters('hospitalB_password')]"
+						"value": "[parameters('hosb_sql_ls_password')]"
 					}
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/hosAdsdepart')]",
+			"name": "[concat(parameters('factoryName'), '/generic_sql_ds')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "sqldataDataLakeLinkedService",
-					"type": "LinkedServiceReference"
+					"referenceName": "hosa_sql_ls",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"db_name": {
+							"value": "@dataset().db_name",
+							"type": "Expression"
+						}
+					}
 				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "departments.csv",
-						"folderPath": "hos-a",
-						"fileSystem": "sqldata"
+				"parameters": {
+					"schema_name": {
+						"type": "String"
 					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sqldataDataLakeLinkedService')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "hospitalA",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "departments"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/hospitalA')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/enconters')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "sqldataDataLakeLinkedService",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "encounters.csv",
-						"folderPath": "hos-a",
-						"fileSystem": "sqldata"
+					"table_name": {
+						"type": "String"
 					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sqldataDataLakeLinkedService')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlEnc')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "hospitalA",
-					"type": "LinkedServiceReference"
+					"db_name": {
+						"type": "String"
+					}
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "encounters"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/hospitalA')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/patient')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "sqldataDataLakeLinkedService",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "patients.csv",
-						"folderPath": "hos-a",
-						"fileSystem": "sqldata"
+					"schema": {
+						"value": "@dataset().schema_name",
+						"type": "Expression"
 					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sqldataDataLakeLinkedService')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTablePatient')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "hospitalA",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "patients"
+					"table": {
+						"value": "@dataset().table_name",
+						"type": "Expression"
+					}
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/hospitalA')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/prov')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "sqldataDataLakeLinkedService",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "providers.csv",
-						"folderPath": "hos-b",
-						"fileSystem": "sqldata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sqldataDataLakeLinkedService')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTableProviders')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "hospitalA",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "providers"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/hospitalA')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/transdata')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "sqldataDataLakeLinkedService",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "transactions.csv",
-						"folderPath": "hos-b",
-						"fileSystem": "sqldata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sqldataDataLakeLinkedService')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTableTransa')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "hospitalA",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "transactions"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/hospitalA')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/deprt')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "sqldataDataLakeLinkedService",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "departments.csv",
-						"folderPath": "hos-b",
-						"fileSystem": "sqldata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sqldataDataLakeLinkedService')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTabledeprt')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "hospitalB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "departments"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/hospitalB')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/enc')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "sqldataDataLakeLinkedService",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "encounters.csv",
-						"folderPath": "hos-b",
-						"fileSystem": "sqldata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sqldataDataLakeLinkedService')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTableenc')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "hospitalB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "encounters"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/hospitalB')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pat')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "sqldataDataLakeLinkedService",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "patients.csv",
-						"folderPath": "hos-b",
-						"fileSystem": "sqldata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sqldataDataLakeLinkedService')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTablepat')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "hospitalB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "patients"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/hospitalB')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTableprov')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "hospitalB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "providers"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/hospitalB')]"
+				"[concat(variables('factoryId'), '/linkedServices/hosa_sql_ls')]"
 			]
 		}
 	]
