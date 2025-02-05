@@ -11,6 +11,9 @@
 		"sqldataDataLakeLinkedService_accountKey": {
 			"value": ""
 		},
+		"hospitalB_password": {
+			"value": ""
+		},
 		"hospitalA_properties_typeProperties_server": {
 			"value": "techfiedsolutionsdev.database.windows.net"
 		},
@@ -22,6 +25,15 @@
 		},
 		"sqldataDataLakeLinkedService_properties_typeProperties_url": {
 			"value": "https://techfiedsolutionadlsdev.dfs.core.windows.net/"
+		},
+		"hospitalB_properties_typeProperties_server": {
+			"value": "techfiedsolutionsdev.database.windows.net"
+		},
+		"hospitalB_properties_typeProperties_database": {
+			"value": "techfiedsolutions-hospital-b"
+		},
+		"hospitalB_properties_typeProperties_userName": {
+			"value": "mikedev"
 		}
 	}
 }

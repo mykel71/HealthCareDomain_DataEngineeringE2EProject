@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'sqldataDataLakeLinkedService'"
 		},
+		"hospitalB_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'hospitalB'"
+		},
 		"hospitalA_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "techfiedsolutionsdev.database.windows.net"
@@ -30,6 +34,18 @@
 		"sqldataDataLakeLinkedService_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://techfiedsolutionadlsdev.dfs.core.windows.net/"
+		},
+		"hospitalB_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "techfiedsolutionsdev.database.windows.net"
+		},
+		"hospitalB_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "techfiedsolutions-hospital-b"
+		},
+		"hospitalB_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "mikedev"
 		},
 		"containerUri": {
 			"type": "string",
@@ -64,6 +80,9 @@
 					"sqldataDataLakeLinkedService_accountKey": {
 						"value": "[parameters('sqldataDataLakeLinkedService_accountKey')]"
 					},
+					"hospitalB_password": {
+						"value": "[parameters('hospitalB_password')]"
+					},
 					"hospitalA_properties_typeProperties_server": {
 						"value": "[parameters('hospitalA_properties_typeProperties_server')]"
 					},
@@ -75,10 +94,39 @@
 					},
 					"sqldataDataLakeLinkedService_properties_typeProperties_url": {
 						"value": "[parameters('sqldataDataLakeLinkedService_properties_typeProperties_url')]"
+					},
+					"hospitalB_properties_typeProperties_server": {
+						"value": "[parameters('hospitalB_properties_typeProperties_server')]"
+					},
+					"hospitalB_properties_typeProperties_database": {
+						"value": "[parameters('hospitalB_properties_typeProperties_database')]"
+					},
+					"hospitalB_properties_typeProperties_userName": {
+						"value": "[parameters('hospitalB_properties_typeProperties_userName')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "techfiedsolutions-adf_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'techfiedsolutions-adf_ArmTemplate_0')]"
+			]
 		}
 	]
 }
