@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "providers.csv",
-				"folderPath": "hos-a",
+				"folderPath": "hos-b",
 				"fileSystem": "sqldata"
 			},
 			"columnDelimiter": ",",
