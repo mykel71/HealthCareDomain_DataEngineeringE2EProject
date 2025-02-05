@@ -233,7 +233,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureSqlTableTransa",
+						"referenceName": "AzureSqlTableTransact",
 						"type": "DatasetReference"
 					}
 				]
