@@ -1,0 +1,9 @@
+{
+	"name": "techfiedsolutions-adf",
+	"location": "southafricanorth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "45c7b597-5959-4028-9bb3-1a68ab7e4860",
+		"tenantId": "565d73bf-656e-4ad6-ac1e-9aac5bce0728"
+	}
+}
