@@ -115,4 +115,69 @@ Bronze - Data Engineer
 
 ![image](https://github.com/user-attachments/assets/73b1e11e-c679-440b-8640-cf1160a8e0ad)
 
+Fact -  a numeric value
+Dimension - supporting things (SCD2)
+
+### Step 1
+EMR data -> bronze layer
+#### Tech:
+  - Azure Data Factory (For Ingestion)
+  - Azure Databricks - for our data processing
+  - Azure SQL DB - EMR
+  - Azure SA - Raw files, parquet files
+  - Key Vault - for storing the credentials
+
+
+#### Azure Storage Account:
+
+techfiedsolutionadlsdev (adls gen2)
+	- landing
+	- bronze
+	- silver
+	- gold
+
+	- configs (metadata driven pipeline)
+		emr
+			load_config.csv
+
+
+EMR (Azure SQL DB) -> ADLS Gen2 (Bronze folder in Parquet format)
+
+we will create a audit table (Delta Table)
+ADF pipeline
+
+Linked Service
+ - Azure SQL DB 
+ - ADLS Gen2 
+ - Delta Lake
+ - Key Vault
+
+Datasets
+ - Azure SQL (DB database name / table name / schema name)
+ - Delimited text (ADLS Gen2)
+ - Parquet (ADLS Gen2)
+ - Databricks delta lake (Delta Lake)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### High level ERD 
+![image](https://github.com/user-attachments/assets/286c5652-b3a1-4a92-b27b-c7ddd29bdad4)
+
 
