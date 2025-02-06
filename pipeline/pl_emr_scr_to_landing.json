@@ -38,7 +38,7 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEach",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -83,6 +83,7 @@
 								"fieldList": [],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
