@@ -358,7 +358,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "generic_adls_flat_file_ds",
+									"referenceName": "generic_adls_parquet_ds",
 									"type": "DatasetReference",
 									"parameters": {
 										"container": "configs",
@@ -373,14 +373,14 @@
 									}
 								},
 								"fieldList": [
-									"childItems"
+									"exists"
 								],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
+									"type": "ParquetReadSettings"
 								}
 							}
 						}
