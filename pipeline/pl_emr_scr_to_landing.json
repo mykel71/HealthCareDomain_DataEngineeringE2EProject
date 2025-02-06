@@ -34,7 +34,8 @@
 							"file_path": "emr",
 							"file_name": "load_config.csv"
 						}
-					}
+					},
+					"firstRowOnly": false
 				}
 			},
 			{
