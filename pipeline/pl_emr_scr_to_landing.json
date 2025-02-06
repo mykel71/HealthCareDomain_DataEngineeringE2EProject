@@ -342,6 +342,7 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "FileExists",
@@ -371,7 +372,9 @@
 										}
 									}
 								},
-								"fieldList": [],
+								"fieldList": [
+									"childItems"
+								],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"enablePartitionDiscovery": false
