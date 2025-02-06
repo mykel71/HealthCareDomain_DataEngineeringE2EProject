@@ -342,6 +342,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('Lkp_EMR_Configs').output.value",
+						"type": "Expression"
+					},
 					"isSequential": true,
 					"activities": [
 						{
