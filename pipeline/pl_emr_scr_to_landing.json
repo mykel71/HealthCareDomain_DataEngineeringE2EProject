@@ -361,7 +361,7 @@
 									"referenceName": "generic_adls_parquet_ds",
 									"type": "DatasetReference",
 									"parameters": {
-										"container": "configs",
+										"container": "bronze",
 										"file_path": {
 											"value": "@item().targetpath",
 											"type": "Expression"
