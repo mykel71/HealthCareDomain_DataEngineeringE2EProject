@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "copy_sql_data",
+				"name": "CopyDataHB",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -41,13 +41,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "department_data",
+						"referenceName": "missing_tbl",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "tbd_sink_ls",
+						"referenceName": "sink_ds_parquet",
 						"type": "DatasetReference"
 					}
 				]
