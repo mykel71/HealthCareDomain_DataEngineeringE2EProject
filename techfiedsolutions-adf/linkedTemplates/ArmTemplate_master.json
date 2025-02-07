@@ -23,6 +23,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'hosb_sql_ls'"
 		},
+		"tbd_hosa_ls_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'tbd_hosa_ls'"
+		},
+		"tbd_AzureDataLakeStorage_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'tbd_AzureDataLakeStorage'"
+		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://techfiedsolutionadlsdev.dfs.core.windows.net/"
@@ -50,6 +58,22 @@
 		"hosb_sql_ls_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "mikedev"
+		},
+		"tbd_hosa_ls_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "techfiedsolutionsdev.database.windows.net"
+		},
+		"tbd_hosa_ls_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "techfiedsolutions-hospital-b"
+		},
+		"tbd_hosa_ls_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "mikedev"
+		},
+		"tbd_AzureDataLakeStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://techfiedsolutionadlsdev.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -90,6 +114,12 @@
 					"hosb_sql_ls_password": {
 						"value": "[parameters('hosb_sql_ls_password')]"
 					},
+					"tbd_hosa_ls_password": {
+						"value": "[parameters('tbd_hosa_ls_password')]"
+					},
+					"tbd_AzureDataLakeStorage_accountKey": {
+						"value": "[parameters('tbd_AzureDataLakeStorage_accountKey')]"
+					},
 					"AzureDataLakeStorage_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
 					},
@@ -110,6 +140,18 @@
 					},
 					"hosb_sql_ls_properties_typeProperties_userName": {
 						"value": "[parameters('hosb_sql_ls_properties_typeProperties_userName')]"
+					},
+					"tbd_hosa_ls_properties_typeProperties_server": {
+						"value": "[parameters('tbd_hosa_ls_properties_typeProperties_server')]"
+					},
+					"tbd_hosa_ls_properties_typeProperties_database": {
+						"value": "[parameters('tbd_hosa_ls_properties_typeProperties_database')]"
+					},
+					"tbd_hosa_ls_properties_typeProperties_userName": {
+						"value": "[parameters('tbd_hosa_ls_properties_typeProperties_userName')]"
+					},
+					"tbd_AzureDataLakeStorage_properties_typeProperties_url": {
+						"value": "[parameters('tbd_AzureDataLakeStorage_properties_typeProperties_url')]"
 					}
 				}
 			},

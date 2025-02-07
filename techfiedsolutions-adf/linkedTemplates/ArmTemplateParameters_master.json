@@ -17,6 +17,12 @@
 		"hosb_sql_ls_password": {
 			"value": ""
 		},
+		"tbd_hosa_ls_password": {
+			"value": ""
+		},
+		"tbd_AzureDataLakeStorage_accountKey": {
+			"value": ""
+		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://techfiedsolutionadlsdev.dfs.core.windows.net/"
 		},
@@ -37,6 +43,18 @@
 		},
 		"hosb_sql_ls_properties_typeProperties_userName": {
 			"value": "mikedev"
+		},
+		"tbd_hosa_ls_properties_typeProperties_server": {
+			"value": "techfiedsolutionsdev.database.windows.net"
+		},
+		"tbd_hosa_ls_properties_typeProperties_database": {
+			"value": "techfiedsolutions-hospital-b"
+		},
+		"tbd_hosa_ls_properties_typeProperties_userName": {
+			"value": "mikedev"
+		},
+		"tbd_AzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://techfiedsolutionadlsdev.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"value": ""
