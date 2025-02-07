@@ -1,0 +1,16 @@
+{
+	"name": "missing_tbl",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "tbd_hosa_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "providers"
+		}
+	}
+}
