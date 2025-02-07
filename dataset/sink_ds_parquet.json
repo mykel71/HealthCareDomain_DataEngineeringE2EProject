@@ -1,0 +1,21 @@
+{
+	"name": "sink_ds_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "tbd_AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "departments.csv",
+				"folderPath": "hosb",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
