@@ -145,16 +145,88 @@ RCM ensures financial sustainability while maintaining quality care. Two critica
   - **Pipeline Activities:**
     - **Lookup Activity:** Reads Config File (`configs/emr/load_config.csv`)
 
-
-start here............
 ---
 
+### SILVER LAYER
+=========
+
+Implement the silver layer
+Clean / CDM / SCD2 / Delta tables
+Implementing Gold Layer
+Facts and Dims
+Implementing Key vault
+Improve the naming convensions
+Make ADF pipeline parallel
+API's
+Claims Data
+is_active flag implementation
+Implement the Unity Catalog
+Right now our catalog is a hive metastore which is local
+
+
+EMR - Azure SQL DB (bronze)
+Claims - Flat file (landing zone)
+NPI / ICD codes (API)  (bronze)
+CPT code (flat file) (landing zone)
+
+
+Bronze Layer
+=============
+=> claims data from landing to bronze
+=> NPI and ICD data (call api and directly put to bronze)
+=> CPT data from landing to bronze
+
+Note that in bronze every thing we are keeping in parquet format.
+
+difference between ICD codes CPT codes
+========================================
+https://www.simplepractice.com/blog/icd-codes-and-cpt-codes/
+
+Bronze to Silver Layer
+=======================
+clean
+CDM
+SCD2
+Delta table
+
+Silver to Gold
+================
+Facts and Dims
 ## High-Level ERD:
 ![ERD](https://github.com/user-attachments/assets/286c5652-b3a1-4a92-b27b-c7ddd29bdad4)
 
 ### Fact & Dimension Tables:
 - **Fact:** Numeric values (e.g., Transactions, Payments, Claims)
 - **Dimension:** Supporting entities (e.g., Patients, Providers, Insurance Companies, ICD Codes)
+
+Best Practices / Enhancements
+==============================
+Implement Key vault
+Improvise on naming convention
+Make ADF pipeline parallel
+is_active flag implement
+Implement the unity catalog
+adding retries
+
+
+Few things to Note - 
+1. All the data provided is generated using faker module
+2. Data discrepancy and some joins might not work.
+Improved the naming convension / organized the code well.
+
+
+unity catalog
+catalog name -> Schema name (Database) -> Table name
+dbutils.secrets.get('tt-hc-kv', 'tt-adls-access-key-dev')
+
+how to setup the key vault
+===========================
+
+this is the final and right doc to be deleted
+
+
+
+
 
 This README provides a structured overview of the project, ensuring clarity and professional presentation.
 
