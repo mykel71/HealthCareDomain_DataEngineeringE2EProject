@@ -222,8 +222,6 @@ dbutils.secrets.get('tt-hc-kv', 'tt-adls-access-key-dev')
 how to setup the key vault
 ===========================
 
-this is the final and right doc to be deleted
-today didnt do anything
 
 
 
